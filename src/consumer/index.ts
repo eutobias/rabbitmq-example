@@ -2,7 +2,7 @@ import { Message } from 'amqplib'
 import dotenv from 'dotenv'
 
 import { QueueClient } from '../shared/rabbitmq'
-import { ConfigConstants, PaymentRequest, PaymentResponse, PaymentStatus } from '../shared/types'
+import { ConfigConstants } from '../shared/types'
 
 dotenv.config()
 
