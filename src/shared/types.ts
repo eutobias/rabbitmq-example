@@ -1,7 +1,14 @@
 export enum PaymentTypes {
-    CREDIT_CARD = "PaymentTypes.CREDIT_CARD",
-    DEBIT = "PaymentTypes.DEBIT",
-    PIX = "PaymentTypes.PIX",
+    CREDIT_CARD = "CREDIT_CARD",
+    DEBIT = "DEBIT",
+    PIX = "PIX",
+}
+
+export enum PaymentStatus {
+    PROCESSING= "PROCESSING",
+    FAILED_SENT="FAILED_SENT",
+    FAILED_PROCESSING="FAILED_PROCESSING",
+    COMPLETE="COMPLETE"
 }
 
 export interface ConfigConstants {
@@ -13,4 +20,8 @@ export interface PaymentRequest {
     purchaseId: number;
     paymentAmount: number;
     paymentType: PaymentTypes;
+}
+
+export interface PaymentResponse {
+    paymentStatus: PaymentStatus
 }

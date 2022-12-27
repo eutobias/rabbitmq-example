@@ -1,22 +1,32 @@
-import amqp, {Channel} from 'amqplib/callback_api';
+import amqp, { Channel } from 'amqplib/callback_api';
 
-const RABBITMQ_URL:string = process.env.RABBITMQ_URL || "";
+class QueueClient {
 
-let mqChannel:Channel;
-amqp.connect(RABBITMQ_URL, function (err, conn) {
-   if (err)
-      return console.log(err)
+   RABBITMQ_URL: string
+   channel: Channel | undefined;
 
-   conn.createChannel(function (err, channel) {
-      mqChannel = channel;
-   });
-});
+   constructor() {
+      this.RABBITMQ_URL = process.env.RABBITMQ_URL || ""
 
-export const sendToQueue = async (queueName:string, data:any):Promise<boolean> => {
-   return await mqChannel.sendToQueue(queueName, Buffer.from(data));
+      amqp.connect(this.RABBITMQ_URL, (err, conn) => {
+         if (err)
+            throw (err)
+
+         conn.createChannel((err, channel) => {
+            this.channel = channel;
+         });
+      });
+   }
+
+   async send(queueName: string, data: any): Promise<boolean> {
+      console.log("data: ", data);
+      console.log("queueName: ", queueName);
+      if (!this.channel)
+         throw new Error("Queue client not connected")
+
+      const buffer = Buffer.from(JSON.stringify(data))
+      return await this.channel.sendToQueue(queueName, buffer);
+   }
 }
 
-process.on('exit', (code) => {
-   mqChannel.close(() => {});
-   console.log(`Closing rabbitmq channel`);
-});
+export { QueueClient }
