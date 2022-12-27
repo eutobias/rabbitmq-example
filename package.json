@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev:producer": "nodemon --exec \"ts-node\" ./src/producer/index.ts"
+    "dev:producer": "nodemon --exec \"ts-node\" ./src/producer/index.ts",
+    "dev:consumer": "nodemon --exec \"ts-node\" ./src/consumer/index.ts"
   },
   "keywords": [],
   "author": "",

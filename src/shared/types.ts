@@ -1,3 +1,5 @@
+import { Message } from "amqplib";
+
 export enum PaymentTypes {
     CREDIT_CARD = "CREDIT_CARD",
     DEBIT = "DEBIT",
@@ -5,14 +7,15 @@ export enum PaymentTypes {
 }
 
 export enum PaymentStatus {
-    PROCESSING= "PROCESSING",
-    FAILED_SENT="FAILED_SENT",
-    FAILED_PROCESSING="FAILED_PROCESSING",
-    COMPLETE="COMPLETE"
+    PROCESSING = "PROCESSING",
+    FAILED_SENT = "FAILED_SENT",
+    FAILED_PROCESSING = "FAILED_PROCESSING",
+    COMPLETE = "COMPLETE"
 }
 
 export interface ConfigConstants {
-    PAYMENT_QUEUE: string
+    PAYMENT_QUEUE: string,
+    QUEUE_CONSUME_INTERVAL_MS?: number
 }
 
 export interface PaymentRequest {
@@ -25,3 +28,5 @@ export interface PaymentRequest {
 export interface PaymentResponse {
     paymentStatus: PaymentStatus
 }
+
+export type QueueMessageCallback = (message: Message) => void
