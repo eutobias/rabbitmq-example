@@ -27,10 +27,10 @@ class QueueClient {
 
             process.once('SIGINT', async () => {
                if (this.channel)
-                  await this.channel.close(() => { });
+                  this.channel.close(()=>{});
 
                if (this.connection)
-                  await this.connection.close();
+                  this.connection.close();
             });
          });
       });
